@@ -47,7 +47,7 @@ local function startAutoPrestige()
     end
 end
 
--- Create ScreenGui to hold the buttons
+-- Create ScreenGui to hold the buttons and notification
 local screenGui = Instance.new("ScreenGui")
 screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
 
@@ -56,7 +56,7 @@ local panelFrame = Instance.new("Frame")
 panelFrame.Size = UDim2.new(0, 250, 0, 250)  -- Size for the panel
 panelFrame.Position = UDim2.new(0.5, -125, 0.5, -125)  -- Center the panel
 panelFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-panelFrame.BackgroundTransparency = 0.2  -- Less transparency for better visibility
+panelFrame.BackgroundTransparency = 0.1  -- Less transparency for better visibility
 panelFrame.Parent = screenGui
 
 -- Create the title bar
@@ -180,16 +180,27 @@ autoPrestigeButton.MouseButton1Click:Connect(function()
     end
 end)
 
--- Function to toggle the panel visibility
-local function togglePanel()
-    panelVisible = not panelVisible
-    panelFrame.Visible = panelVisible
-end
+-- Create the notification for the script
+local notification = Instance.new("TextLabel")
+notification.Size = UDim2.new(0, 450, 0, 60)  -- Size for notification
+notification.Position = UDim2.new(0.5, -175, 0, 10)  -- Centered at the top middle of the panel
+notification.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- Black background for notification
+notification.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text color
+notification.TextSize = 20  -- Text size
+notification.Text = "Subscribe to Fco Hub's in YouTube"  -- Notification text
+notification.Visible = false  -- Initially hidden
+notification.Parent = screenGui
+
+-- Show the notification when the script runs
+notification.Visible = true
+wait(5)  -- Show for 5 seconds
+notification.Visible = false  -- Hide after 5 seconds
 
 -- Keybind to toggle the panel with "LeftCtrl"
 game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
     if input.KeyCode == Enum.KeyCode.LeftControl and not gameProcessedEvent then
-        togglePanel()
+        panelVisible = not panelVisible
+        panelFrame.Visible = panelVisible  -- Toggle panel visibility
     end
 end)
 
@@ -198,3 +209,9 @@ closeButton.MouseButton1Click:Connect(function()
     panelVisible = false
     panelFrame.Visible = false  -- Hide the panel
 end)
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Made by Fco Hub's";
+    Text = "Lick my balls";
+
+})
